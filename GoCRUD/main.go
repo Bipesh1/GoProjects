@@ -7,7 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
-
+	"github.com/rs/cors"
 	"github.com/gorilla/mux"
 )
 
@@ -94,7 +94,13 @@ func main() {
 	r.HandleFunc("/movies/{id}", updateMovie).Methods("PUT")
 	r.HandleFunc("/movies/{id}", deleteMovie).Methods("DELETE")
 
+	c := cors.New(cors.Options{
+        AllowedOrigins: []string{"http://127.0.0.1:5500"}, // Replace with your allowed origin
+        AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+        AllowedHeaders: []string{"Content-Type", "Authorization"},
+    })
+
 	fmt.Println("Starting Port at 8000")
-	log.Fatal(http.ListenAndServe(":8000", r))
+	log.Fatal(http.ListenAndServe(":8000", c.Handler(r)))
 
 }

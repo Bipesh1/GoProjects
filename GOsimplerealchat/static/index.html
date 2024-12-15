@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat Game</title>
+</head>
+<body>
+    <h1>Real-Time Multiplayer Chat</h1>
+    <div id="chat"></div>
+    <input type="text" id="messageInput" placeholder="Type your message here...">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        let ws = new WebSocket("ws://localhost:8080/ws/");
+
+        ws.onmessage = function(event) {
+            let message = JSON.parse(event.data);
+            console.log(message)
+            let chat = document.getElementById("chat");
+            let p = document.createElement("p");
+            p.innerText = message.Sender + ": " + message.Content;
+            chat.appendChild(p);
+        };
+
+        function sendMessage() {
+            let input = document.getElementById("messageInput");
+            console.log(input)
+            let message = {
+                Content: input.value,
+                Sender: "Player"
+            };
+            ws.send(JSON.stringify(message));
+            input.value = "";
+        }
+    </script>
+</body>
+</html>
