@@ -13,7 +13,7 @@ type PageData struct{
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string,data PageData){
-	tmplPath:= filepath.Join("templates",tmpl)
+	tmplPath:= filepath.Join("./templates",tmpl)
 	t,err:= template.ParseFiles(tmplPath)
 	if(err!=nil){
 		http.Error(w,"Unable to load template",http.StatusInternalServerError)
