@@ -11,7 +11,7 @@ FROM alpine:latest
 WORKDIR /root/
 
 COPY  --from=builder /app/myapp .
-
+COPY --from=builder /app/templates ./templates
 EXPOSE 9000
 
 CMD [ "./myapp" ]
