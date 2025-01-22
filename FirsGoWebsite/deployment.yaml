@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
       - name: go-app
-        image: bipeshadhikari/goimage
+        image: bipeshadhikari/goimage:latest
         ports:
         - containerPort: 9000
